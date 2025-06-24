@@ -6,7 +6,6 @@ array = [[0 for _ in range(cols)] for _ in range(rows)]
 def showArray(arrayName):
     for row in arrayName:
         print(row)
-    print("\n")
     
 def addTile():
     filledTiles = []
@@ -23,5 +22,14 @@ def addTile():
         print("Error. Can't add more more tiles to the board.")
     showArray(array)
 
-addTile()
+def UserController():
+    userInput = input("What would you like to do? \n1 = Add Tiles\n2 = Exit\n")
+    if(userInput == "1"):
+        addTile()
+    elif(userInput == "2"):
+        return 0
+    UserController()
+        
+showArray(array)
+UserController()
 
