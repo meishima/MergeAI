@@ -24,22 +24,22 @@ def AddTile():
     
 def MoveTile(row,column,direction):
     match direction: # "array[row][column] = 0" is repeated a lot. should simplify.
-        case "Left":
+        case "left":
             if(column != 0):
                 if(array[row][column-1] == array[row][column]):
                     array[row][column] = 0
                     array[row][column-1] += 1
-        case "Right":
+        case "right":
             if(column != COLUMN - 1): # -1 Added because of 0-index situation 
                 if(array[row][column+1] == array[row][column]):
                     array[row][column] = 0
                     array[row][column+1] += 1
-        case "Up":
+        case "up":
             if(row != 0):
                 if(array[row-1][column] == array[row][column]):
                     array[row][column] = 0
                     array[row-1][column] += 1
-        case "Down":
+        case "down":
             if(row != ROWS - 1): # -1 Added because of 0-index situation 
                 if(array[row+1][column] == array[row][column]):
                     array[row][column] = 0
@@ -54,7 +54,7 @@ def UserController():
         case "2":
             moveInput_row = int(input("Select the row of the tile that you would like to move:"))
             moveInput_column = int(input("Select the column of the tile that you would like to move:"))
-            moveInput_direction = input("Select the direction that you would like to move your tile (Left,Right,Up,Down):")
+            moveInput_direction = input("Select the direction that you would like to move your tile (Left,Right,Up,Down):").lower()
             MoveTile(moveInput_row,moveInput_column,moveInput_direction)
         case _:
             return 0
