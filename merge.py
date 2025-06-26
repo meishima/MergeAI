@@ -23,18 +23,28 @@ def AddTile():
     showArray(array)
     
 def MoveTile(row,column,direction):
-    match direction:
+    match direction: # "array[row][column] = 0" is repeated a lot. should simplify.
         case "Left":
             if(column != 0):
                 if(array[row][column-1] == array[row][column]):
                     array[row][column] = 0
-                    array[row][column-1] =+ 1
+                    array[row][column-1] += 1
         case "Right":
-            if(column != COLUMN): #FIX THIS TOMORROW NOT COMPLETED
+            if(column != COLUMN - 1): # -1 Added because of 0-index situation 
                 if(array[row][column+1] == array[row][column]):
                     array[row][column] = 0
-                    array[row][column-1] =+ 1
-    showArray()
+                    array[row][column+1] += 1
+        case "Up":
+            if(row != 0):
+                if(array[row-1][column] == array[row][column]):
+                    array[row][column] = 0
+                    array[row-1][column] += 1
+        case "Down":
+            if(row != ROWS - 1): # -1 Added because of 0-index situation 
+                if(array[row+1][column] == array[row][column]):
+                    array[row][column] = 0
+                    array[row+1][column] += 1
+    showArray(array)
 
 def UserController():
     startInput = input("What would you like to do? \n1 = Add Tiles\n2 = Move Tile\n3 = Exit\n")
