@@ -90,13 +90,13 @@ def GameEnded(board):
     for row in range(len(board)):
         for col in range(len(board[row])):
             if(board[row][col] != 0):
+                counter = 0
                 for direction in ["up", "down", "left", "right"]:
-                    counter = 0
                     newBoard = copy.deepcopy(board)
                     if MoveTile(row, col, direction, newBoard) == 0:
                         counter += 1
-                    if(counter == 4):
-                        return 1
+                if(counter == 4):
+                    return 1
     return 0
     
 def Expectimax(board,depth):
