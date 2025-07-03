@@ -1,8 +1,9 @@
 import random
 import copy
+import math
 
 ROW, COLUMN = (5, 5)
-array = [[0 for _ in range(COLUMN)] for _ in range(ROW)] 
+array = [[1 for _ in range(COLUMN)] for _ in range(ROW)] 
 
 def ShowBoard(board):
     for row in board:
@@ -67,37 +68,49 @@ def UserController():
             MoveTile(moveInput_row,moveInput_column,moveInput_direction,array)
             ShowBoard(array)
         case "3":
-            score, array = Expectimax(array,3)
+            score, array = Expectimax(array,4)
             ShowBoard(array)
         case _:
             return 0
     Heuristic(array)
     UserController()
         
+def GenerateWeight(row,col):
+    weight = []
+    for i in range(row):
+        weight_row = []
+        for j in range(col):
+            weight_num = (i + j) ** 3
+            weight_row.append(weight_num)
+        weight.append(weight_row)
+    return weight
+        
 def Heuristic(board):
     empty = 0
-    highestTile = 0
+    highestTile = 0    
+    gradient = 0
+    weight = GenerateWeight(len(board),len(board[0]))
     for row in range(len(board)):
         for col in range(len(board[row])):
             if(board[row][col] == 0):
                 empty += 1
             if(board[row][col] > highestTile):
                 highestTile = board[row][col]
-    score = empty * 2 + highestTile * 1.5 # Random modifiers, can tweak them later on.
+            gradient += board[row][col] * weight[row][col]
+    score = empty * 100 + highestTile * 50 + gradient 
+    print(score)
     return score
 
 def GameEnded(board):
     for row in range(len(board)):
         for col in range(len(board[row])):
-            if(board[row][col] != 0):
-                counter = 0
-                for direction in ["up", "down", "left", "right"]:
-                    newBoard = copy.deepcopy(board)
-                    if MoveTile(row, col, direction, newBoard) == 0:
-                        counter += 1
-                if(counter == 4):
-                    return 1
-    return 0
+            if(board[row][col] == 0):
+                return 0
+            for direction in ["up", "down", "left", "right"]:
+                newBoard = copy.deepcopy(board)
+                if MoveTile(row, col, direction, newBoard) == 1:
+                    return 0
+    return 1
     
 def Expectimax(board,depth):
     if(depth == 0 or GameEnded(board)):
@@ -105,8 +118,8 @@ def Expectimax(board,depth):
     bestBoard = None
     maxEval = float('-inf')
     for row in range(len(board)):
-        for col in range(len(board[row])): # That if statement below...
-            if(board[row][col] != 0 and ( board[row][col] == board[max(row-1,row)][col] or board[row][col] == board[min(row+1,row)][col] or board[row][col] == board[row][max(col,col-1) or board[row][col] == board[row][min(col,col+1)]])):
+        for col in range(len(board[row])):
+            if(board[row][col] != 0):
                 for direction in ["up", "down", "left", "right"]:
                     newBoard = copy.deepcopy(board)
                     if MoveTile(row, col, direction, newBoard) == 1:
