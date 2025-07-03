@@ -2,7 +2,7 @@ import random
 import copy
 
 ROW, COLUMN = (5, 5)
-array = [[1 for _ in range(COLUMN)] for _ in range(ROW)] 
+array = [[0 for _ in range(COLUMN)] for _ in range(ROW)] 
 
 def ShowBoard(board):
     for row in board:
