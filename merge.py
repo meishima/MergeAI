@@ -1,6 +1,5 @@
 import random
 import copy
-import math
 
 ROW, COLUMN = (5, 5)
 array = [[1 for _ in range(COLUMN)] for _ in range(ROW)] 
@@ -68,7 +67,7 @@ def UserController():
             MoveTile(moveInput_row,moveInput_column,moveInput_direction,array)
             ShowBoard(array)
         case "3":
-            score, array = Expectimax(array,4)
+            score, array = Expectimax(array,3)
             ShowBoard(array)
         case _:
             return 0
@@ -80,7 +79,7 @@ def GenerateWeight(row,col):
     for i in range(row):
         weight_row = []
         for j in range(col):
-            weight_num = (i + j) ** 3
+            weight_num = (i + j) ** 2
             weight_row.append(weight_num)
         weight.append(weight_row)
     return weight
