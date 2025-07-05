@@ -1,2 +1,2 @@
 # MergeAI
-2048 Inspired game that gets solved by an AI using heuristic algorithms.
+2048 Inspired game that gets solved by an AI using heuristic algorithms using expectimax function.
